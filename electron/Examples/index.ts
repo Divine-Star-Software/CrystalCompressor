@@ -11,18 +11,11 @@ for (let i = 0; i < testArray.length; i++) {
  }
 }
 
-console.log("STARTING ARRAY");
-console.log(testArray);
-console.log(testArray.length);
 
 const compressedArray = await CrystalCompressor.compressArray(testArray);
-console.log("COMPRESSED ARRAY");
-console.log(compressedArray);
 
 const decompressedArray = await CrystalCompressor.decompressArray(
  compressedArray.buffer,
  "Uint32"
 );
-console.log("DECOMPRESSED ARRAY");
-console.log(decompressedArray);
-console.log(decompressedArray.length);
+

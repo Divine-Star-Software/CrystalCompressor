@@ -25,9 +25,7 @@ export const CCCore = {
   return concatenated;
  },
 
- async decompressArrayBuffer(
-  input: ArrayBuffer
- ): Promise<[Uint8Array[], number]> {
+ async decompressArrayBuffer(input: ArrayBuffer): Promise<Uint8Array> {
   //@ts-ignore
   const ds = new DecompressionStream("gzip");
   const writer = ds.writable.getWriter();
@@ -42,70 +40,53 @@ export const CCCore = {
    output.push(value);
    totalSize += value.byteLength;
   }
-  return [output, totalSize];
+  const concatenated = new Uint8Array(totalSize);
+  let offset = 0;
+  for (const array of output) {
+   concatenated.set(array, offset);
+   offset += array.byteLength;
+  }
+  return concatenated;
  },
 
- processArray(type: TypeArraysNames, arrays: Uint8Array[], totalSize: number) {
-  const arrayStrides = this.arrayStrides[type];
-  const returnArray = this.getArray[type](totalSize / arrayStrides);
-  let k = 0;
-  for (const _8Array of arrays) {
-   let dataview = new DataView(_8Array.buffer);
-   for (let i = 0; i < _8Array.length; i += arrayStrides) {
-    returnArray[k] = dataview.getUint32(i, true);
-    k++;
-   }
-  }
+ processArray(type: TypeArraysNames, array: Uint8Array) {
+  const returnArray = this.getArray[type](array.buffer);
   return returnArray;
  },
 
- arrayStrides: {
-  Int8: 1,
-  Uint8: 1,
-  Uint8Clamped: 1,
-  Int16: 2,
-  Uint16: 2,
-  Int32: 4,
-  Uint32: 4,
-  Float32: 4,
-  Float64: 8,
-  BigInt64: 8,
-  BigUint64: 8,
- },
-
  getArray: {
-  Int8: (size: number) => {
-   return new Int8Array(size);
+  Int8: (buffer: ArrayBuffer) => {
+   return new Int8Array(buffer);
   },
-  Uint8: (size: number) => {
-   return new Uint8Array(size);
+  Uint8: (buffer: ArrayBuffer) => {
+   return new Uint8Array(buffer);
   },
-  Uint8Clamped: (size: number) => {
-   return new Uint8ClampedArray(size);
+  Uint8Clamped: (buffer: ArrayBuffer) => {
+   return new Uint8ClampedArray(buffer);
   },
-  Int16: (size: number) => {
-   return new Int16Array(size);
+  Int16: (buffer: ArrayBuffer) => {
+   return new Int16Array(buffer);
   },
-  Uint16: (size: number) => {
-   return new Uint16Array(size);
+  Uint16: (buffer: ArrayBuffer) => {
+   return new Uint16Array(buffer);
   },
-  Int32: (size: number) => {
-   return new Int32Array(size);
+  Int32: (buffer: ArrayBuffer) => {
+   return new Int32Array(buffer);
   },
-  Uint32: (size: number) => {
-   return new Uint32Array(size);
+  Uint32: (buffer: ArrayBuffer) => {
+   return new Uint32Array(buffer);
   },
-  Float32: (size: number) => {
-   return new Float32Array(size);
+  Float32: (buffer: ArrayBuffer) => {
+   return new Float32Array(buffer);
   },
-  Float64: (size: number) => {
-   return new Float64Array(size);
+  Float64: (buffer: ArrayBuffer) => {
+   return new Float64Array(buffer);
   },
-  BigInt64: (size: number) => {
-   return new BigInt64Array(size);
+  BigInt64: (buffer: ArrayBuffer) => {
+   return new BigInt64Array(buffer);
   },
-  BigUint64: (size: number) => {
-   return new BigUint64Array(size);
+  BigUint64: (buffer: ArrayBuffer) => {
+   return new BigUint64Array(buffer);
   },
  },
 };

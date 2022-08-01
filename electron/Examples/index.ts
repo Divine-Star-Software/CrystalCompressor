@@ -12,10 +12,12 @@ for (let i = 0; i < testArray.length; i++) {
 }
 
 
+console.log(testArray);
 const compressedArray = await CrystalCompressor.compressArray(testArray);
-
+console.log(compressedArray);
 const decompressedArray = await CrystalCompressor.decompressArray(
  compressedArray.buffer,
  "Uint32"
 );
+console.log(decompressedArray);
 

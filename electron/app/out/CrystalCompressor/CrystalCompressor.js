@@ -8,6 +8,6 @@ export const CrystalCompressor = {
     },
     async decompressArray(buffer, type) {
         const returnData = await this.core.decompressArrayBuffer(buffer);
-        return this.core.processArray(type, returnData[0], returnData[1]);
+        return this.core.processArray(type, returnData);
     },
 };

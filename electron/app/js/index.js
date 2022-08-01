@@ -9,5 +9,8 @@ for (let i = 0; i < testArray.length; i++) {
         testArray[i] = ((Math.random() - 0.5) * 2 * 2 ** 32) >> 0;
     }
 }
+console.log(testArray);
 const compressedArray = await CrystalCompressor.compressArray(testArray);
+console.log(compressedArray);
 const decompressedArray = await CrystalCompressor.decompressArray(compressedArray.buffer, "Uint32");
+console.log(decompressedArray);

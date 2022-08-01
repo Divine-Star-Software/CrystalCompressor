@@ -1,6 +1,6 @@
 {
   "name": "crystal-compressor",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A TypeScript library compressing and decompressing typed arrays.",
   "type" : "module",
   "main": "out/index.js",
